@@ -1,0 +1,195 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  body {
+    background: linear-gradient(to right, #e6f7ff, #ffffff);
+    color: #333;
+  }
+  
+  header {
+    text-align: center;
+    padding: 20px;
+    background-color: #0099cc;
+    color: white;
+  }
+  
+  header h1 {
+    margin-bottom: 10px;
+  }
+  
+  header p {
+    font-size: 1.2rem;
+  }
+  
+  .headi{
+    color: #e6f7ff;
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+  }
+
+  .headi2{
+    color: #e6f7ff;
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 20px;
+  }
+  .team-section {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    background-color: #f0f8ff;
+  }
+  
+  .team-member {
+    margin: 0 15px;
+    text-align: center;
+  }
+  
+  .team-member img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+  }
+  
+  .team-member:hover img {
+    transform: scale(1.05);
+  }
+  
+  .team-member h3 {
+    margin-top: 10px;
+    font-size: 1.4rem;
+    color: #0073e6;
+  }
+
+  a{
+    text-decoration: none;
+  }
+
+  i {
+    color: #034990;
+  }
+  /* Styling for the info grid */
+.info-section {
+    padding: 50px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .info-section h2 {
+    margin-bottom: 30px;
+    font-size: 2.5rem; /* Increase font size for better visibility */
+    margin-left: 10px; /* Increase left margin for better alignment */
+    padding-left: 10px; /* Add padding to create space */
+    font-family: "DM Serif Display", serif;
+    font-weight: 700; /* Make the font weight bolder */
+    font-style: normal;
+    color: #333; /* Dark color for better contrast */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+    border-left: 5px solid #007BFF; /* Add a left border for emphasis */
+    padding-left: 15px; /* Increase padding for better spacing with the border */
+    background-color: #f9f9f9; /* Light background color for contrast */
+    border-radius: 5px; /* Rounded corners for a softer look */
+  }
+  
+
+  .info-section h4{
+    color: #034990;
+  }
+  
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Slightly larger minimum size */
+    gap: 20px;
+    width: 80%;
+    max-width: 1200px; /* Increased max-width for better use of space */
+    margin: 0 auto; /* Center the grid container */
+  }
+  
+  .info-item {
+    background-color: #ffffff; /* Use a clean white background for better contrast */
+    padding: 25px; /* Slightly increased padding for more spacing */
+    border-radius: 12px; /* Slightly rounded corners for a softer look */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Soft shadow for a more subtle effect */
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effects */
+  }
+  
+  .info-item h4 {
+    margin-bottom: 15px; /* Increased margin for better separation from text */
+    font-size: 1.4rem; /* Larger font size for headings */
+    color: #333; /* Darker color for better readability */
+  }
+  
+  .info-item p {
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.5; /* Improved line spacing for readability */
+  }
+  
+  .info-item i {
+    margin-right: 10px; /* Space between the icon and text */
+    font-size: 1.6em; /* Slightly larger icon size for better visibility */
+    vertical-align: middle; /* Align icon with the middle of the text */
+    margin-bottom: 4px;
+  }
+  
+  .info-item:hover {
+    transform: scale(1.05); /* Slight zoom effect on hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover for depth */
+  }
+  
+  
+  footer {
+    background-color: #0099cc;
+    color: white;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  footer a {
+    color: white;
+    margin: 0 5px;
+    text-decoration: none;
+  }
+  
+  footer a:hover {
+    text-decoration: underline;
+  }
+
+  /* Basic fade effect styles */
+    .fade-out {
+    animation: fadeOut 0.5s ease-in-out forwards;
+  }
+  
+  .fade-in {
+    animation: fadeIn 0.5s ease-in-out forwards;
+  }
+  
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  

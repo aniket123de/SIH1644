@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emission Estimation & Monitoring Platform</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Martel+Sans:wght@200;300;400;600;700;800;900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <!-- AOS (Animate On Scroll) CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    
+    <!-- Chart.js CSS (if needed) -->
+    <link href="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.css" rel="stylesheet">
+
+    <style>
+        /* General Styles */
+body {
+    font-family: "Kanit", sans-serif;
+    font-weight: 800;
+    font-style: normal;
+    background-color: #f5f5f5;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    font-weight: 800;
+}
+
+nav.navbar {
+    background: linear-gradient(#faf5cb, #faf5cb);
+    padding: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: flex-end; /* Aligns items to the right */
+}
+.navbar-logo {
+    height: 120px;
+    filter: drop-shadow(1px 1px rgb(152, 152, 152));
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center; /* Align logo and text vertically */
+}
+
+
+
+.navbar-text {
+    display: flex;
+    flex-direction: column; /* Stack text vertically */
+    align-items: left; /* Center-align text */
+    margin-left: 10px; /* Space between logo and text */
+}
+
+.navbar-text span {
+    font-size: 2.25rem; /* Adjust font size */
+    font-family: "Martel Sans", sans-serif; 
+    font-weight: 800;
+    font-weight: 700; /* Font weight */
+    color: #000000; /* White text color */
+    margin: 0;
+}
+
+.navbar-text p {
+    font-size: 1.5rem; /* Adjust font size */
+    color: #000000; /* White text color */
+    margin: 0; /* Remove default margin */
+}
+
+
+nav.navbar .navbar-nav {
+    display: flex;
+    align-items: center; /* Aligns items vertically */
+}
+
+nav.navbar .navbar-nav .nav-item {
+    margin-right: 10px; /* Adjust this value for space between items */
+}
+
+nav.navbar .navbar-nav .nav-link {
+    border: 4px solid #000000;
+    padding: 10px 20px; /* Increased padding for more space around text */
+    border-radius: 50px;
+    transition: background-color 0.3s ease;
+}
+
+/* Change background color on hover */
+nav.navbar .navbar-nav .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.934);
+}
+
+nav.navbar a.navbar-brand, nav.navbar  {
+    color: #000000;
+    font-weight: bold;
+    font-size: 40px;
+}
+nav.navbar a.nav-link{
+    color: #000000;
+    font-weight: bold;
+    font-size: 25px;
+}
+nav.navbar a.navbar-brand:hover, nav.navbar a.nav-link:hover {
+    color: rgb(0, 118, 0);
+}
+
+nav.navbar .navbar-nav .nav-item .dropdown-menu {
+    background-color: #2c3e50;
+    border: none;
+    border-radius: 0;
+}
+
+nav.navbar .navbar-nav .nav-item .dropdown-menu .dropdown-item {
+    color: #ffffff;
+    padding: 10px 20px;
+    transition: background-color 0.3s ease;
+}
+
+nav.navbar .navbar-nav .nav-item .dropdown-menu .dropdown-item:hover {
+    background-color: rgb(0, 118, 0);
+}
+
+/* Running Text Division */
+#run {
+  border: 3px solid black;
+  border-radius: 5px;
+  overflow: hidden;
+  white-space: nowrap; /* Ensures text doesn't wrap and causes scrolling */
+}
+
+#scroll-text {
+  display: inline-block; /* Ensures the text moves horizontally */
+  white-space: nowrap; /* Ensures text doesn't wrap and causes scrolling */
+  color: red;
+  text-shadow: #000000 1px;
+  
+  /* animation properties */
+  -moz-transform: translateX(100%);
+  -webkit-transform: translateX(100%);
+  transform: translateX(100%);
+  
+  -moz-animation: my-animation 30s linear infinite;
+  -webkit-animation: my-animation 15s linear infinite;
+  animation: my-animation 30s linear infinite;
+}
+
+/* for Firefox */
+@-moz-keyframes my-animation {
+  from { -moz-transform: translateX(100%); }
+  to { -moz-transform: translateX(-100%); }
+}
+
+/* for Chrome */
+@-webkit-keyframes my-animation {
+  from { -webkit-transform: translateX(100%); }
+  to { -webkit-transform: translateX(-100%); }
+}
+
+@keyframes my-animation {
+  from {
+    -moz-transform: translateX(100%);
+    -webkit-transform: translateX(100%);
+    transform: translateX(100%);
+  }
+  to {
+    -moz-transform: translateX(-100%);
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+  }
+}
+
+
+/* Hero Section */
+.hero {
+    background-image: url('33.jpg'); /* Ensure this path is correct */
+    background-size: cover;
+    
+    background-position: center;
+    height: 100vh;
+    color: #fff;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    background-repeat: no-repeat;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, var(--overlay-opacity, 0.7)); /* Default overlay opacity */
+    z-index: 1;
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+.hero h1, .hero p, .hero .btn {
+    position: relative;
+    z-index: 2;
+}
+
+.hero {
+    background: linear-gradient(to bottom, #343a40 0%, #ffffff 100%); /* Adjust colors as needed */ /* Add padding to the section */
+    color: #000; /* Text color */
+}
+
+
+.sobuj{
+    color: rgb(0, 118, 0);
+}
+/* Consolidated Hero Section */
+.hero {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-repeat: no-repeat;
+    width: 100%; /* Full width */
+ /* Include padding in the width calculation */
+}
+.holud{
+    color: rgb(251, 255, 3);
+}
+.kalo{
+    color: rgb(74, 74, 74);
+}
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+    transition: background-color 0.3s ease;
+}
+
+.hero h1 {
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    font-family: "Poppins", sans-serif;
+    font-weight: 800;
+    white-space: nowrap; /* Prevents text from wrapping */
+    text-align: center; /* Ensures the text is centered */
+    width: 100%; /* Make sure it takes full container width */
+    display: block; /* Ensures block-level behavior */
+    font-size: 4rem; /* Adjust font-size as needed */
+}
+
+.hero p {
+    font-size: 1.75rem;
+    font-weight: 400;
+    margin-top: 10px;
+    line-height: 1.6;
+}
+
+.hero .btn {
+    margin-top: 70px;
+    padding: 15px 35px;
+    background: transparent;
+    border: 2px solid white;
+    color: white;
+    font-size: 1.2rem;
+    border-radius: 50px;
+    transition: background-color 0.4s ease, color 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero .btn:hover {
+    background-color: white;
+    color: black;
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+}
+
+.hero .btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background: rgba(255, 255, 255, 0.15);
+    transform: translate(-50%, -50%) rotate(45deg);
+    transition: width 0.5s ease, height 0.5s ease, background 0.4s ease;
+    border-radius: 50%;
+    z-index: 0;
+}
+
+.hero .btn:hover::before {
+    width: 120%;
+    height: 120%;
+    background: rgba(255, 255, 255, 0.25);
+}
+/*Carousel css*/
+.carousel-caption {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    text-align: center;
+}
+
+.carousel-caption h1 {
+    font-size: 4.5rem; /* Adjust as needed */
+    font-weight: 700;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.carousel-caption p {
+    font-size: 1.75rem; /* Adjust as needed */
+    font-weight: 400;
+    margin-top: 10px;
+    line-height: 1.6;
+}
+
+.carousel-caption .btn {
+    margin-top: 20px;
+    padding: 15px 35px;
+    background: transparent;
+    border: 2px solid white;
+    color: white;
+    font-size: 1.2rem;
+    border-radius: 50px;
+    transition: background-color 0.4s ease, color 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 1;
+}
+.d-block.w-100 {
+    filter: brightness(50%); /* Adjusts brightness to 50% */
+}
+
+
+.carousel-caption .btn:hover {
+    background-color: white;
+    color: black;
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+}
+
+.majh {
+  font-family: "Kanit", sans-serif;
+  font-weight: 900;
+  font-style: normal; /* Bold font weight for emphasis */
+  color: #333; /* Dark color for strong contrast */
+  text-align: center; /* Center-align the heading */
+  margin: 40px 0; /* Vertical spacing for separation */
+  padding: 10px 20px; /* Padding for extra spacing */
+  border-bottom: 4px solid #06005d; /* Bottom border for emphasis */
+  text-transform: uppercase; /* Uppercase letters for a strong statement */
+  letter-spacing: 1px; /* Slightly increased letter spacing for readability */
+  background-color: #f4f4f4; /* Light background color for contrast */
+  border-radius: 5px; /* Rounded corners for a softer look */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+.lekha {
+  font-family: "Kanit", sans-serif; /* Use the custom font for consistency */
+  font-size: 1.1rem; /* Slightly larger text for better readability */
+  line-height: 1.6; /* Increased line height for better readability */
+  color: #ffffff; /* Darker color for good contrast */
+  margin: 20px auto; /* Vertical spacing and center alignment */
+  padding: 0 15px; /* Horizontal padding for better text alignment */
+  text-align: center; /* Center-align the text */
+  max-width: 800px; /* Limit the width for better readability */
+  border-left: 5px solid #06005d; /* Optional left border for emphasis */
+  padding-left: 20px; /* Padding to create space between text and border */
+  border-radius: 5px; /* Rounded corners for a softer look */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.fon{
+  font-family: "Kanit", system-ui;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 50px;
+}
+
+/* Custom Scrollbar for WebKit browsers */
+::-webkit-scrollbar {
+    width: 12px; /* Width of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+    background: #f5f5f5; /* Background of the scrollbar track */
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #18bc9b; /* Scrollbar handle color */
+    border-radius: 6px; /* Rounded corners for the handle */
+    border: 3px solid #f5f5f5; /* Padding between handle and track */
+    transition: background-color 0.3s ease; /* Smooth color transition */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #16a085; /* Handle color when hovered */
+}
+#emission-estimation {
+    background: linear-gradient(#000000, #787878); /* Black to grey gradient */
+    color: white; /* White text for contrast */
+    padding: 50px 0; /* Adjust the padding to your preference */
+    font-family: 'roboto';
+    font-weight: 1;
+}
+
+/* Features Section */
+.features {
+    padding: 70px 0;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), #787878), url('main.jpg');  /* Bluish gradient */
+    color: #fff; /* Set text color to white for better contrast */
+}
+
+.features h2 {
+    text-align: center;
+    margin-bottom: 50px;
+    font-size: 2.75rem; /* Increased font size for headings */
+    font-weight: 700;
+    color: #ffffff; /* Set to white for contrast */
+    letter-spacing: 1px; /* Slightly increased letter spacing */
+}
+
+.features .card {
+    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+    border: 2px solid transparent;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease; /* Increased duration for smooth transition */
+    overflow: hidden;
+    position: relative;
+    border-radius: 15px;
+    margin-bottom: 30px; /* Added margin to create space between rows */
+    width: 100%;
+    max-width: 400px; /* Adjust to match your design */
+    height: 340px; /* Adjust to match your design */
+    backdrop-filter: blur(5px); /* Apply blur effect to the background */
+    -webkit-backdrop-filter: blur(10px); /* Ensure compatibility with WebKit browsers */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional shadow to enhance depth */
+}
+
+
+.features .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    border: 2px solid #000000; /* Border appears on hover */
+}
+
+.features .card img {
+    height: 200px;
+    object-fit:contain;
+    margin-top: 10px;
+    transition: transform 0.3s ease;
+}
+
+.features .card:hover img {
+    transform: scale(1.05);
+}
+
+.features .card-title {
+    font-size: 1.75rem; /* Increased font size for card titles */
+    font-weight: 600;
+    color: #2c3e50;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.features .card-title:hover {
+    color: #18bc9c; /* Change color on hover */
+}
+
+.features .card-text {
+    font-size: 1.2rem; /* Increased font size for card text */
+    font-weight: 400;
+    color: #7f8c8d;
+    line-height: 1.6; /* Increased line height for readability */
+}
+
+/* Contact Section */
+section#contact {
+    background: linear-gradient(#787878, #2C3E50);
+}
+
+section#contact h2 {
+    font-size: 2.5rem; /* Increased font size for headings */
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+form .form-label {
+    font-size: 1.1rem; /* Increased font size for labels */
+    font-weight: 500;
+}
+
+form .form-control {
+    font-size: 1rem; /* Increased font size for input fields */
+    border-radius: 8px; /* Rounded corners for input fields */
+}
+
+form .btn-primary {
+    font-size: 1.2rem; /* Increased font size for button */
+    font-weight: 500;
+    padding: 10px 20px; /* Increased padding for button */
+}
+
+/* Footer */
+footer {
+    background-color: #2c3e50;
+    color: #ffffff;
+    padding: 20px 0;
+    text-align: center;
+    font-size: 0.9rem;
+    position: relative;
+    z-index: 1;
+}
+
+footer a {
+    color: #18bc9c;
+    text-decoration: none;
+    font-weight: 500; /* Increased font weight for better readability */
+}
+
+footer a:hover {
+    color: #16a085;
+}
+
+ /* Basic fade effect styles */
+ .fade-out {
+    animation: fadeOut 0.5s ease-in-out forwards;
+  }
+  
+  .fade-in {
+    animation: fadeIn 0.5s ease-in-out forwards;
+  }
+  
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+</style>        
+</head>
+<body>
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Coal Mine Data</title>
+        <link rel="stylesheet" href="styles.css">
+        <!-- Include Bootstrap CSS -->
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Include your custom CSS -->
+    </head>
+    <body>
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container">
+                <a class="navbar-brand d-flex align-items-center" href="#emission-estimation">
+                    <img src="ash.png" alt="Logo" class="navbar-logo">
+                    <div class="navbar-text">
+                        <span>कोयला मंत्रालय</span>
+                        <p>Ministry of Coal</p>
+                    </div>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Login/Register</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                About
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="https://coal.gov.in/en">Ministry of Coal</a></li>
+                                <li><a class="dropdown-item" href="#team">Public Information</a></li>
+                                <li><a class="dropdown-item fade-link" href="devs.html">Developing Team</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#features">Features</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#contact">Contact HQ</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    
+        <div id="run">
+            <div id="scroll-text">This is a Demo Application built by Team ERROR503! on the purpose of solving Problem Statement SIH1644 , where we want to quantify Carbon Footprints with the help of Technology.</div>
+        </div>
+    
+        <!-- Hero Section -->
+        <section class="hero">
+            <div id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="3700">
+                <div class="carousel-inner">
+                    <!-- Slide 1 -->
+                    <div class="carousel-item active">
+                        <img src="33.jpg" class="d-block w-100" alt="Background Image 1">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h1 data-aos="fade-up" class="sada">हर कोयला खदान, एक <span class="sobuj">हरित</span> कदम</h1>
+                            <p data-aos="fade-up" data-aos-delay="300" class="fon">(Every coal mine, a <span class="sobuj">green</span> step)</p>
+                            <a href="#emission-estimation" class="btn" data-aos="fade-up" data-aos-delay="600">Explore Emission Estimation</a>
+                        </div>
+                    </div>
+                    <!-- Slide 2 -->
+                    <div class="carousel-item">
+                        <img src="iem.jpg" class="d-block w-100" alt="Background Image 2">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h1 data-aos="fade-up">उत्सर्जन निगरानी में <span class="holud">नवाचार</span></h1>
+                            <p data-aos="fade-up" data-aos-delay="300">Leading the way in emission estimation and carbon footprint analysis</p>
+                            <a href="#emission-estimation" class="btn" data-aos="fade-up" data-aos-delay="600">Explore Our Solutions</a>
+                        </div>
+                    </div>
+                    <!-- Slide 3 -->
+                    <div class="carousel-item">
+                        <img src="mining.jpg" class="d-block w-100" alt="Background Image 3">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h1 data-aos="fade-up">बेहतर <span class="kalo">खनन</span> प्रथाएँ</h1>
+                            <p data-aos="fade-up" data-aos-delay="300">Committed to reducing environmental impact through innovation</p>
+                            <a href="#emission-estimation" class="btn" data-aos="fade-up" data-aos-delay="600">Learn More</a>
+                        </div>
+                    </div>
+                    <!-- Slide 4 -->
+                    <div class="carousel-item">
+                        <img src="green1.jpeg" class="d-block w-100" alt="Background Image 4">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h1 data-aos="fade-up">एक <span class="sobuj">स्वस्थ</span> भविष्य</h1>
+                            <p data-aos="fade-up" data-aos-delay="300">Working towards a sustainable and eco-friendly mining industry.</p>
+                            <a href="#emission-estimation" class="btn" data-aos="fade-up" data-aos-delay="600">Join Us</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Carousel Controls -->
+                <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </section>
+    
+        <!-- Emission Estimation Section -->
+        <section id="emission-estimation" class="p-5" data-aos="fade-up">
+            <div class="container">
+                <h2 class="majh">Our Motto</h2>
+                <p class="lekha">The web application for Indian coal mines aims to quantify carbon footprints and explore carbon neutrality pathways using a comprehensive tech stack quantifies coal mine carbon footprints using React.js/Angular for the UI, Tableau dashboards, Python Flask for recommendations, and Node.js/Express for data management.</p>
+            </div>
+        </section>
+    
+        <!-- Features Section -->
+        <section id="features" class="features">
+            <div class="container">
+                <h2>Platform Features</h2>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="card" data-aos="fade-up" data-aos-delay="100">
+                            <a href="emission.html">
+                                <img src="emi.svg" class="card-img-top" alt="Emission Estimation">
+                            </a>
+                            <div class="card-body">
+                                <a class="card-title" href="emission.html">Emission Estimation</a>
+                                <p class="card-text">Calculate emissions in real-time using advanced data analytics.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="card" data-aos="fade-up" data-aos-delay="200">
+                            <a href="visuli.html">
+                                <img src="visu.png" class="card-img-top" alt="Data Monitoring">
+                            </a>
+                            <div class="card-body">
+                                <a class="card-title" href="visuli.html">Visualization</a>
+                                <p class="card-text">Monitor and visualize emission data through interactive charts.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="card" data-aos="fade-up" data-aos-delay="300">
+                            <a href="affor_tool/client/build/reac.html">
+                                <img src="for.png" class="card-img-top" alt="Afforestation Analysis">
+                            </a>
+                            <div class="card-body">
+                                <a class="card-title" href="affor_tool/client/build/reac.html">Afforestation Analysis</a>
+                                <p class="card-text">Evaluate and plan afforestation strategies to offset emissions.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Center-align the bottom two cards -->
+                    <div class="col-lg-12">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-4">
+                                <div class="card" data-aos="fade-up" data-aos-delay="400">
+                                    <a href="intro.html">
+                                        <img src="ca.png" class="card-img-top" alt="Methane Capture">
+                                    </a>
+                                    <div class="card-body">
+                                        <a class="card-title" href="intro.html">Methane Capture</a>
+                                        <p class="card-text">Analyze and improve methane capture systems to reduce greenhouse gas emissions.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="card" data-aos="fade-up" data-aos-delay="500">
+                                    <a href="datasets.html">
+                                        <img src="data.png" class="card-img-top" alt="Visualization">
+                                    </a>
+                                    <div class="card-body">
+                                        <h5 class="card-title" href="datasets.html">Database</h5>
+                                        <p class="card-text">Yearly and real-time data management system for mines.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    
+        <!-- Contact Section -->
+        <section id="contact" class="p-5 bg-light" data-aos="fade-up">
+            <div class="container">
+                <h2>Contact HQ</h2>
+                <form>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Employee Name</label>
+                        <input type="text" class="form-control" id="email" placeholder="Your Name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="designation" class="form-label">Designation</label>
+                        <input type="text" class="form-control" id="designation" placeholder="Your Job-Roll">
+                    </div>
+                    <div class="mb-3">
+                        <label for="message" class="form-label">Message</label>
+                        <textarea class="form-control" id="message" rows="4" placeholder="Your Message"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </form>
+            </div>
+        </section>
+    
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2024 Emission Monitoring Platform. All rights reserved.</p>
+        </footer>
+    
+        <!-- Bootstrap JavaScript Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+    </html>
+    
+    <!-- Bootstrap JS, Popper.js, and jQuery -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
+    <!-- AOS (Animate On Scroll) JS -->
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
+    <!-- Initialize AOS -->
+    <script>
+        AOS.init({
+            duration: 1000,
+            easing: 'ease-in-out',
+            once: true
+        });
+       
+            AOS.init({
+                duration: 1000,
+                easing: 'ease-in-out',
+                once: true
+            });
+        
+            window.addEventListener('scroll', function() {
+                const scrollPosition = window.scrollY;
+                const heroSection = document.querySelector('.hero');
+                const maxScroll = heroSection.offsetHeight; // Height of the hero section
+                
+                // Calculate scroll ratio
+                let scrollRatio = scrollPosition / maxScroll;
+                
+                // Clamp the scroll ratio between 0 and 1
+                if (scrollRatio > 1) scrollRatio = 1;
+                
+                // Set the opacity of the hero background overlay
+                heroSection.style.setProperty('--overlay-opacity', scrollRatio * 0.7);
+            });
+            
+    </script>
+    <!-- Transition JS-->
+    <script>
+        // Function to add fade-out effect before navigating
+        function fadeOutAndRedirect(url) {
+        document.body.classList.add('fade-out');
+        setTimeout(() => {
+        window.location.href = url;
+      }, 500); // Match the duration of the fade-out animation
+    }
+    
+    // Add event listener to all links with specific class
+        document.querySelectorAll('a.dreopdown-item').forEach(link => {
+        link.addEventListener('click', (e) => {
+        e.preventDefault();
+        fadeOutAndRedirect(e.target.href);
+      });
+    });
+    
+    </script>
+    <script>
+        var myCarousel = document.getElementById('myCarousel');
+        var carousel = new bootstrap.Carousel(myCarousel, {
+            interval: 3000, // Set the interval to 2 seconds
+            ride: 'carousel'
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Team Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="devs.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/fontawesome.min.css" integrity="sha512-B46MVOJpI6RBsdcU307elYeStF2JKT87SsHZfRSkjVi4/iZ3912zXi45X5/CBr/GbCyLx6M1GQtTKYRd52Jxgw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+</head>
+<body>
+  <header>
+    <h1 class="headi">Meet the Faces behind ERROR503!</h1>
+    <p class="headi2">We build innovative solutions.</p>
+  </header>
+
+  <section class="team-section">
+    <div class="team-member">
+      <img src="member1.jpg" alt="Team Member 1">
+      <h3>Anik Paul</h3>
+      <p>Frontend Developer</p>
+    </div>
+    <div class="team-member">
+      <img src="member2.jpg" alt="Team Member 2">
+      <h3>Anuja Deb</h3>
+      <p>UI/UX Designer</p>
+    </div>
+    <div class="team-member">
+      <img src="member3.jpg" alt="Team Member 3">
+      <h3>Aniket De</h3>
+      <p>Backend Engineer</p>
+    </div>
+  </section>
+
+  <section class="info-section">
+    <h2>General Information</h2>
+    <div class="info-grid">
+      <div class="info-item">
+        <a href="https://www.linkedin.com/in/anik-paul-2bb315265/">
+            <i class="fa-brands fa-linkedin"></i> <!-- Font Awesome icon -->
+          <h4>Anik Paul</h4>
+        </a>
+        <p>Anik specializes in building responsive and dynamic interfaces using modern frontend technologies.</p>
+      </div>
+      <div class="info-item">
+        <a href="https://www.linkedin.com/in/anuja-deb-015a5a306/">
+            <i class="fa-brands fa-linkedin"></i> <!-- Font Awesome icon -->
+          <h4>Anuja Deb</h4>
+        </a>
+        <p>Anuja is passionate about creating intuitive and visually appealing user experiences.</p>
+      </div>
+      <div class="info-item">
+        <a href="https://www.linkedin.com/in/aniket-de-505362287/">
+            <i class="fa-brands fa-linkedin"></i> <!-- Font Awesome icon -->
+          <h4>Aniket De</h4>
+        </a>
+        <p>Aniket handles the server-side logic and database interactions, ensuring smooth backend operations.</p>
+      </div>
+      <!-- Add more info items if needed -->
+    </div>
+  </section>
+  
+
+  <footer>
+    <p>Follow us on</p>
+    <a href="https://github.com/johndoe" target="_blank">GitHub</a> |
+    <a href="https://twitter.com/johndoe" target="_blank">Twitter</a> |
+    <a href="https://linkedin.com/in/aniketde" target="_blank">LinkedIn</a>
+  </footer>
+
+</body>
+<script>
+    // Function to add fade-out effect before navigating
+    function fadeOutAndRedirect(url) {
+    document.body.classList.add('fade-out');
+    setTimeout(() => {
+    window.location.href = url;
+  }, 500); // Match the duration of the fade-out animation
+}
+
+// Add event listener to all links with specific class
+    document.querySelectorAll('a.fade-link').forEach(link => {
+    link.addEventListener('click', (e) => {
+    e.preventDefault();
+    fadeOutAndRedirect(e.target.href);
+  });
+});
+
+</script>
+</html>

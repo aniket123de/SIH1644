@@ -1,0 +1,18 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [86.412, 23.757]
+        },
+        "properties": {
+          "name": "Jharia Coalfield",
+          "production": 50000
+        }
+      }
+      
+    ]
+  }
+  

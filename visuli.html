@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chart Visualization</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Chart.js CSS (if needed) -->
+    <link href="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.css" rel="stylesheet">
+
+    <style>
+        /* Body and Main Container */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #e9f5e9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 10px;
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            background-color: #2b5329;
+            padding: 8px 15px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .navbar a {
+            color: white;
+            padding: 8px 15px;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        .navbar a:hover {
+            background-color: #4d774e;
+            border-radius: 5px;
+        }
+
+        /* Dropdown Menu */
+        .dropdown-menu {
+            min-width: 150px;
+        }
+
+        /* Chart Containers */
+        .chart-container {
+            display: none; /* Initially hidden */
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f0f9f0;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .chart-box {
+            width: 100%;
+            height: 500px; /* Adjust height to fit the screen */
+            position: relative;
+        }
+
+        canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        /* Pie Chart Size */
+        .pie-chart-container {
+            width: 100%;
+            height: 500px; /* Adjust height to fit the screen */
+        }
+
+        h2 {
+            color: #2b5329;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        /* Button Styling */
+        button, .dropdown-item {
+            background-color: #2b5329;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s;
+        }
+
+        button:hover, .dropdown-item:hover {
+            background-color: #4d774e;
+        }
+
+        .dropdown-item {
+            width: 100%;
+        }
+
+        /* Additional Spacing */
+        .dropdown {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">Chart Visualization</a>
+        </div>
+    </nav>
+
+    <!-- Dropdown Menu -->
+    <div class="container">
+        <div class="dropdown">
+            <button class="btn dropdown-toggle" type="button" id="chartDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                Select Chart
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="chartDropdown">
+                <li><a class="dropdown-item" href="#" onclick="showChart('line')">Line Chart</a></li>
+                <li><a class="dropdown-item" href="#" onclick="showChart('scatter')">Scatter Chart</a></li>
+                <li><a class="dropdown-item" href="#" onclick="showChart('bar')">Bar Chart</a></li>
+                <li><a class="dropdown-item" href="#" onclick="showChart('pie')">Pie Chart</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Chart Sections -->
+    <section id="line-chart" class="p-5 chart-container">
+        <div class="container">
+            <h2>Line Chart</h2>
+            <div class="chart-box">
+                <canvas id="lineChart"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <section id="scatter-chart" class="p-5 chart-container bg-light">
+        <div class="container">
+            <h2>Scatter Chart</h2>
+            <div class="chart-box">
+                <canvas id="scatterChart"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <section id="bar-chart" class="p-5 chart-container">
+        <div class="container">
+            <h2>Bar Chart</h2>
+            <div class="chart-box">
+                <canvas id="barChart"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <section id="pie-chart" class="p-5 chart-container bg-light">
+        <div class="container">
+            <h2>Pie Chart</h2>
+            <div class="pie-chart-container">
+                <canvas id="pieChart"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bootstrap JS, Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+
+    <script>
+        // Function to show the selected chart and hide others
+        function showChart(chartType) {
+            const charts = document.querySelectorAll('.chart-container');
+            charts.forEach(chart => chart.style.display = 'none');
+            document.getElementById(chartType + '-chart').style.display = 'block';
+        }
+
+        // Default: Show Line Chart
+        showChart('line');
+
+        // Setting up the charts with initial empty datasets
+        const ctxLine = document.getElementById('lineChart').getContext('2d');
+        const ctxScatter = document.getElementById('scatterChart').getContext('2d');
+        const ctxBar = document.getElementById('barChart').getContext('2d');
+        const ctxPie = document.getElementById('pieChart').getContext('2d');
+
+        let data = {
+            labels: [],
+            param1: [],
+            param2: [],
+            param3: [],
+            param4: []
+        };
+
+        // Random data generation
+        function getRandomValue() {
+            return Math.floor(Math.random() * 100);
+        }
+
+        function updateData() {
+            let label = data.labels.length + 1;
+            let newParam1 = getRandomValue();
+            let newParam2 = getRandomValue();
+            let newParam3 = getRandomValue();
+            let newParam4 = getRandomValue();
+
+            data.labels.push('Label ' + label);
+            data.param1.push(newParam1);
+            data.param2.push(newParam2);
+            data.param3.push(newParam3);
+            data.param4.push(newParam4);
+
+            if (data.labels.length > 10) {
+                data.labels.shift();
+                data.param1.shift();
+                data.param2.shift();
+                data.param3.shift();
+                data.param4.shift();
+            }
+
+            lineChart.update();
+            barChart.update();
+
+            scatterChart.data.datasets[0].data = [{ x: 0, y: newParam1 }];
+            scatterChart.data.datasets[1].data = [{ x: 1, y: newParam2 }];
+            scatterChart.data.datasets[2].data = [{ x: 2, y: newParam3 }];
+            scatterChart.data.datasets[3].data = [{ x: 3, y: newParam4 }];
+            scatterChart.update();
+
+            pieChart.data.datasets[0].data = [newParam1, newParam2, newParam3, newParam4];
+            pieChart.update();
+        }
+
+        // Line Chart (Cumulative data)
+        const lineChart = new Chart(ctxLine, {
+            type: 'line',
+            data: {
+                labels: data.labels,
+                datasets: [
+                    { label: 'Param 1', data: data.param1, borderColor: 'blue', fill: false },
+                    { label: 'Param 2', data: data.param2, borderColor: 'red', fill: false },
+                    { label: 'Param 3', data: data.param3, borderColor: 'green', fill: false },
+                    { label: 'Param 4', data: data.param4, borderColor: 'purple', fill: false }
+                ]
+            },
+            options: {}
+        });
+
+        // Bar Chart
+        const barChart = new Chart(ctxBar, {
+            type: 'bar',
+            data: {
+                labels: data.labels,
+                datasets: [
+                    { label: 'Param 1', data: data.param1, backgroundColor: 'blue' },
+                    { label: 'Param 2', data: data.param2, backgroundColor: 'red' },
+                    { label: 'Param 3', data: data.param3, backgroundColor: 'green' },
+                    { label: 'Param 4', data: data.param4, backgroundColor: 'purple' }
+                ]
+            },
+            options: {}
+        });
+
+        // Scatter Chart
+        const scatterChart = new Chart(ctxScatter, {
+            type: 'scatter',
+            data: {
+                datasets: [
+                    { label: 'Param 1', data: [{ x: 0, y: 0 }], backgroundColor: 'blue' },
+                    { label: 'Param 2', data: [{ x: 0, y: 0 }], backgroundColor: 'red' },
+                    { label: 'Param 3', data: [{ x: 0, y: 0 }], backgroundColor: 'green' },
+                    { label: 'Param 4', data: [{ x: 0, y: 0 }], backgroundColor: 'purple' }
+                ]
+            },
+            options: {}
+        });
+
+        // Pie Chart
+        const pieChart = new Chart(ctxPie, {
+            type: 'pie',
+            data: {
+                labels: ['Param 1', 'Param 2', 'Param 3', 'Param 4'],
+                datasets: [{
+                    label: 'Parameter Distribution',
+                    data: [25, 25, 25, 25],
+                    backgroundColor: ['blue', 'red', 'green', 'purple']
+                }]
+            },
+            options: {}
+        });
+
+        // Update charts every 4 seconds with random data
+        setInterval(updateData, 4000);
+
+    </script>
+
+</body>
+</html>

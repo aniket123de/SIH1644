@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            outline: none;
+        }
+
+        :root {
+            --main-color: #fff;
+            --second-color: #347deb;
+            --box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+            --facebook-color: rgb(60, 90, 154);
+            --google-color: rgb(220, 74, 61);
+        }
+
+        html {
+            height: 100%;
+        }
+
+        body {
+            background-image: url("bg.jpg");
+    background-size: cover; /* Ensures the image covers the entire screen */
+    background-position: center center; /* Centers the image */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    background-attachment: fixed; /* Keeps the background image fixed during scroll (optional) */
+    margin: 0; /* Ensures no margin around the body */
+    height: 100vh;
+    font-family: "Kanit", sans-serif;
+    font-weight: 600;
+    color: #fff;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    line-height: 1.6;
+}
+
+
+        #container {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background-color: var(--main-color);
+            width: 1200px;
+            height: 800px;
+            border-radius: 10px;
+            display: grid;
+            grid-template-columns: repeat(2, 50%);
+            box-shadow: var(--box-shadow);
+            transition-duration: 1s;
+        }
+
+        #left, #right {
+            margin: auto;
+            width: 95%;
+            height: 96%;
+            border-radius: 10px;
+        }
+
+        #left {
+            background-image: url("coal.jpg");
+            background-size: cover;
+            background-position: center;
+            box-shadow: var(--box-shadow);
+            animation: fadeInLeft 1s ease-out;
+            color: white; /* Set text color to white */
+        }
+
+        #right {
+            background-color: var(--main-color);
+            box-shadow: var(--box-shadow);
+            animation: fadeInRight 1s ease-out;
+        }
+
+        #welcome, #lorem {
+            margin: 20px;
+            text-shadow: var(--box-shadow);
+            animation: textFadeIn 1s ease-out;
+            color: white; /* Set text color to white */
+        }
+
+        #welcome {
+            font-size: 75px;
+            font-weight: 300;
+            margin-top: 330px;
+            text-shadow: var(--box-shadow);
+        }
+
+        #login {
+            color: #003583;
+            padding-top: 35%;
+            text-align: center;
+            text-transform: uppercase;
+            font-weight: 100;
+            text-shadow: var(--box-shadow);
+        }
+
+        .client-info {
+            display: block;
+            margin: 20px auto;
+            width: 60%;
+            height: 50px;
+            border: solid #999 1px;
+            border-radius: 5px;
+            text-indent: 15px;
+            transition: all 200ms;
+            box-shadow: var(--box-shadow);
+            animation: inputFocus 0.5s ease-out;
+        }
+
+        .client-info:focus {
+            width: 80%;
+        }
+
+        label {
+            position: absolute;
+            margin: -76px 130px;
+            font-size: 12px;
+            white-space: nowrap;
+            background: #fff;
+            padding: 0 5px;
+            color: #999;
+            transition: all 200ms;
+            text-shadow: var(--box-shadow);
+        }
+
+        #email:focus ~ label[for="email"] {
+            margin: -76px 70px;
+        }
+
+        #password:focus ~ label[for="password"] {
+            margin: -76px 70px;
+        }
+
+        #submit {
+            border: none;
+            background-color: #9055ff;
+            color: white;
+            width: 60%;
+            border-radius: 5px;
+            padding: 15px; /* Add padding for vertical spacing */
+            font-size: 16px;
+            font-weight: 500;
+            text-align: center; /* Center text horizontally */
+            cursor: pointer; /* Change cursor to pointer */
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center; /* Center text vertically */
+            justify-content: center; /* Center text horizontally */
+            box-shadow: var(--box-shadow);
+        }
+
+        #submit:hover {
+            background-color: #df98fa;
+        }
+
+        .social {
+            background-color: #fff;
+            display: block;
+            margin: 10px auto;
+            width: 70%;
+            height: 50px;
+            border: none;
+            border-radius: 5px;
+            text-transform: uppercase;
+            transition-duration: 200ms;
+            box-shadow: var(--box-shadow);
+            text-shadow: var(--box-shadow);
+            font-weight: 500;
+        }
+
+        #facebook {
+            border: solid var(--facebook-color) 1px;
+            color: var(--facebook-color);
+        }
+
+        #facebook:hover {
+            background-color: var(--facebook-color);
+            color: white;
+        }
+
+        #google {
+            border: solid var(--google-color) 1px;
+            color: var(--google-color);
+        }
+
+        #google:hover {
+            background-color: var(--google-color);
+            color: white;
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes textFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes inputFocus {
+            from {
+                border-color: #999;
+                box-shadow: var(--box-shadow);
+            }
+            to {
+                border-color: #80bdff;
+                box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25);
+            }
+        }
+
+        @keyframes buttonPulse {
+            from {
+                transform: scale(1);
+            }
+            to {
+                transform: scale(1.05);
+            }
+        }
+
+        @media (max-width: 1250px) {
+            #container {
+                width: 600px;
+                display: block;
+            }
+
+            #left {
+                display: none;
+            }
+
+            #right {
+                margin-top: 16px;
+                background-image: url("coal.avif");
+                background-size: cover;
+                background-position: center;
+                box-shadow: var(--box-shadow);
+            }
+        }
+
+        @media (max-height: 850px) {
+            #container {
+                width: 1000px;
+                height: 600px;
+            }
+
+            #login {
+                padding-top: 20%;
+            }
+
+            #welcome {
+                margin-top: 240px;
+                font-size: 60px;
+            }
+
+            #lorem {
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="left">
+            <h1 id="welcome">Welcome</h1>
+            <p id="lorem">
+                Our team’s primary goal is to develop a cutting-edge web application that empowers coal mines to measure, manage, and mitigate their carbon footprint, driving sustainability and efficiency through innovative technology and data analytics solutions through these tiles of benefits.
+
+            </p>
+        </div>
+        <div id="right">
+            <h1 id="login">LogIn</h1><br>
+            <input type="email" id="email" class="client-info">
+            <label for="email">Email</label>
+            <input type="password" id="password" class="client-info">
+            <label for="password">Password</label>
+            <input type="submit" id="submit" class="client-info" value="Submit">
+            <button class="social" id="facebook">Connect with Facebook</button>
+            <button class="social" id="google">Connect with Google</button>
+        </div>
+    </div>
+
+    <script>
+        // Function to simulate user input and navigation
+        function checkCredentialsAndRedirect() {
+            // Get the user input values
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+    
+            // Define default user credentials
+            const defaultEmail = 'user123';
+            const defaultPassword = '123456';
+    
+            // Check if the entered email and password match the default credentials
+            if (email === defaultEmail && password === defaultPassword) {
+                // Simulate clicking the submit button
+                document.getElementById('submit').click();
+    
+                // Redirect to the new page
+                setTimeout(() => {
+                    window.location.href = 'scratch.html';
+                }, 1000); // Wait for 1 second to ensure the submit action is registered
+            } else {
+                alert('Incorrect email or password!');
+            }
+        }
+    
+        // Attach event listener to the submit button to prevent autofill and use user input
+        document.getElementById('submit').addEventListener('click', function (event) {
+            event.preventDefault(); // Prevent form submission
+            checkCredentialsAndRedirect(); // Check credentials before redirecting
+        });
+    </script>
+    
+</body>
+</html>

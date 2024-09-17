@@ -1,0 +1,70 @@
+<!-- datasets.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coal Mines Data</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Coal Mines Data</h1>
+        <table id="data-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Location</th>
+                    <th>Type</th>
+                    <th>Production Capacity</th>
+                    <th>Operational Since</th>
+                    <th>Owner</th>
+                    <th>Status</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                    <th>CO2 Emissions</th>
+                    <th>Depth</th>
+                    <th>Mine Size</th>
+                    <th>Workers Employed</th>
+                    <th>Average Extraction Rate</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Data will be inserted here by JavaScript -->
+            </tbody>
+        </table>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('YOUR_RAW_JSON_URL')
+                .then(response => response.json())
+                .then(data => {
+                    const tableBody = document.querySelector('#data-table tbody');
+                    data.forEach(mine => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${mine.id}</td>
+                            <td>${mine.name}</td>
+                            <td>${mine.location}</td>
+                            <td>${mine.type}</td>
+                            <td>${mine.production_capacity}</td>
+                            <td>${mine.operational_since}</td>
+                            <td>${mine.owner}</td>
+                            <td>${mine.status}</td>
+                            <td>${mine.latitude}</td>
+                            <td>${mine.longitude}</td>
+                            <td>${mine.co2_emissions}</td>
+                            <td>${mine.depth}</td>
+                            <td>${mine.mine_size}</td>
+                            <td>${mine.workers_employed}</td>
+                            <td>${mine.average_extraction_rate}</td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        });
+    </script>
+</body>
+</html>

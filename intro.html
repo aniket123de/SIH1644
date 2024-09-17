@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coal Mines Map with Dynamic Alerts</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 90vh;
+            width: 100%;
+        }
+        #warning {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: white;
+            border: 2px solid black;
+            padding: 10px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div id="warning">No alerts</div>
+    <div id="map"></div>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        // Initialize the map
+        const map = L.map('map').setView([20.5937, 78.9629], 5);  // Center of India
+
+        // Add a tile layer to the map
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Example coal mine locations
+        const coalMines = [
+            {name: 'Jharia Coalfield', lat: 23.757, lon: 86.412},
+            {name: 'Korba Coalfield', lat: 22.3475, lon: 82.6967},
+            {name: 'Singareni Collieries', lat: 17.6289, lon: 80.8076},
+            {name: 'Raniganj Coalfield', lat: 23.6229, lon: 87.1378}
+        ];
+
+        // Track used locations
+        const usedLocations = new Set();
+        const MAX_USED_LOCATIONS = 100; // Limit the number of used locations
+
+        // Function to generate a random location near a given lat/lon
+        function getRandomLocationNear(lat, lon, radius = 0.01) {
+            const offsetLat = (Math.random() - 0.5) * radius;
+            const offsetLon = (Math.random() - 0.5) * radius;
+            return [lat + offsetLat, lon + offsetLon];
+        }
+
+        // Function to create a random amoeba-shaped polygon
+        function createRandomAmoebaShape(lat, lon, radius) {
+            const numPoints = 10;  // Number of points for the amoeba shape
+            const shape = [];
+            for (let i = 0; i < numPoints; i++) {
+                const angle = 2 * Math.PI * (i / numPoints);
+                const r = radius * (0.5 + Math.random() * 0.5);  // Randomize the distance from center
+                const dx = r * Math.cos(angle);
+                const dy = r * Math.sin(angle);
+                shape.push([lat + dy, lon + dx]);
+            }
+            return shape;
+        }
+
+        // Function to draw the amoeba shape on the map
+        function drawAmoebaShape(map, lat, lon, color, warningMessage) {
+            const radius = 0.02;  // Radius for the amoeba shape
+            const shape = createRandomAmoebaShape(lat, lon, radius);
+
+            L.polygon(shape, {
+                color: color,
+                fillColor: color,
+                fillOpacity: 0.5
+            }).addTo(map);
+
+            L.marker([lat, lon]).addTo(map)
+                .bindPopup(`<b>${warningMessage}</b>`)
+                .openPopup();
+        }
+
+        // Function to get warning details based on the danger level
+        function getWarningDetails(dangerLevel) {
+            switch (dangerLevel) {
+                case 1:
+                    return {color: 'yellow', message: 'Caution: Potential Danger'};
+                case 2:
+                    return {color: 'orange', message: 'Warning: High Risk'};
+                case 3:
+                    return {color: 'red', message: 'Evacuate: Danger Zone'};
+                default:
+                    return {color: 'grey', message: 'Unknown Danger'};
+            }
+        }
+
+        // Function to generate a unique random location and draw the amoeba shape
+        function generateUniqueRandomLocationAndDraw(map) {
+            let locationChosen = false;
+
+            // Shuffle the coal mines to get a random order
+            const shuffledMines = coalMines.sort(() => Math.random() - 0.5);
+
+            for (const mine of shuffledMines) {
+                const [randLat, randLon] = getRandomLocationNear(mine.lat, mine.lon);
+
+                // Generate a unique key for the location
+                const locationKey = `${randLat.toFixed(5)},${randLon.toFixed(5)}`;
+
+                if (!usedLocations.has(locationKey)) {
+                    usedLocations.add(locationKey);
+                    if (usedLocations.size > MAX_USED_LOCATIONS) {
+                        // Keep the set size manageable by removing old entries
+                        const oldKey = Array.from(usedLocations)[0];
+                        usedLocations.delete(oldKey);
+                    }
+
+                    // Randomly determine the danger level (1 to 3)
+                    const dangerLevel = Math.floor(Math.random() * 3) + 1;
+                    const {color, message} = getWarningDetails(dangerLevel);
+
+                    // Update the top warning message
+                    document.getElementById('warning').innerHTML = `${mine.name}: ${message}`;
+
+                    drawAmoebaShape(map, randLat, randLon, color, message);
+
+                    // Center the map on the new location
+                    map.setView([randLat, randLon], 10); // Adjust zoom level as needed
+
+                    locationChosen = true;
+                    break;
+                }
+            }
+
+            if (!locationChosen) {
+                console.log('No new unique location found.');
+            }
+        }
+
+        // Update the map every 5 seconds
+        setInterval(() => {
+            generateUniqueRandomLocationAndDraw(map);
+        }, 5000);  // 5000 ms = 5 seconds
+    </script>
+</body>
+</html>
