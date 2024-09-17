@@ -37,7 +37,7 @@
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            fetch('YOUR_RAW_JSON_URL')
+            fetch('https://raw.githubusercontent.com/aniket123de/SIH1644/main/coal-mines.json')
                 .then(response => response.json())
                 .then(data => {
                     const tableBody = document.querySelector('#data-table tbody');
