@@ -220,7 +220,9 @@ nav.navbar a.navbar-brand, nav.navbar {
 .hero {
     background-image: url('33.jpg'); /* Ensure this path is correct */
     background-size: cover;
-    
+    font-family: "Kanit", sans-serif;
+  font-weight: 500;
+  font-style: normal;
     background-position: center;
     height: 100vh;
     color: #fff;
@@ -235,6 +237,9 @@ nav.navbar a.navbar-brand, nav.navbar {
 }
 
 .hero::before {
+    font-family: "Kanit", sans-serif;
+  font-weight: 500;
+  font-style: normal;
     content: '';
     position: absolute;
     top: 0;
@@ -431,12 +436,43 @@ nav.navbar a.navbar-brand, nav.navbar {
   color: #ffffff; /* Darker color for good contrast */
   margin: 20px auto; /* Vertical spacing and center alignment */
   padding: 0 15px; /* Horizontal padding for better text alignment */
-  text-align: center; /* Center-align the text */
+  text-align: justify; /* Center-align the text */
   max-width: 800px; /* Limit the width for better readability */
   border-left: 5px solid #06005d; /* Optional left border for emphasis */
   padding-left: 20px; /* Padding to create space between text and border */
   border-radius: 5px; /* Rounded corners for a softer look */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+.hello {
+    display: flexbox;
+    justify-content: 10px; /* Space between text and image */
+    align-items: flex-start; /* Align image with the start of the paragraph */
+}
+.oki{
+    text-align: center;
+    display: flex;
+    justify-content: center; /* Distribute space between the two images */
+    align-items: center;
+    border: 3px solid rgb(47, 6, 6);
+    width: 420px;
+    margin: 0 auto;
+}
+
+.img-right {
+    padding-top: 5px;
+    max-width: 150px; /* Set a max width for both images */
+    height: auto; /* Keep aspect ratio for both images */
+    display: block;
+    margin-right: 10px;
+    height: 120px;
+}
+.img-left{
+    padding-top: 5px;
+    max-width: 150px; /* Set a max width for both images */
+    height: auto; /* Keep aspect ratio for both images */
+    display: block;
+    margin-left: 10px;
+    height: 120px;
 }
 
 .fon{
@@ -666,7 +702,7 @@ footer a:hover {
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#team">
+                            <a class="nav-link" href="datasets.html">
                                 <i class="fas fa-users"></i> Public Information
                             </a>
                         </li>
@@ -749,9 +785,15 @@ footer a:hover {
     
         <!-- Emission Estimation Section -->
         <section id="emission-estimation" class="p-5" data-aos="fade-up">
-            <div class="container">
+            <div class="hello">
                 <h2 class="majh">Our Motto</h2>
-                <p class="lekha">The web application for Indian coal mines aims to quantify carbon footprints and explore carbon neutrality pathways using a comprehensive tech stack quantifies coal mine carbon footprints using React.js/Angular for the UI, Tableau dashboards, Python Flask for recommendations, and Node.js/Express for data management.</p>
+                <p class="lekha">The Indian Coal Mines web application aligns with Prime Minister Narendra Modi's vision of a sustainable future, echoing the goals of the Swachh Bharat Mission by reducing carbon footprints and promoting environmental responsibility. Utilizing cutting-edge technologies like React.js/Angular, MongoDB, Python Flask, and Node.js, the platform quantifies emissions and explores carbon neutrality pathways for coal mines. This initiative supports a cleaner, greener India, in line with the nation's commitment to sustainability, cleanliness, and a progressive carbon-neutral economy.</p>
+                <div class="oki">
+                    <img src="sbm.svg" alt="" class="img-right">
+                    <img src="cil.png" alt="" class="img-left">
+                </div>
+
+                
             </div>
         </section>
     
